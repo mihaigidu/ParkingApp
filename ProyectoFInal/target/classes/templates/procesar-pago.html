@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Procesar Pago - ParkingApp</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+<div class="container mt-5">
+  <h1>Detalles de la Reserva</h1>
+
+  <div class="card mt-4">
+    <div class="card-body">
+      <h5 class="card-title">Resumen de la Reserva</h5>
+      <p><strong>Matrícula:</strong> <span th:text="${matricula}">ABC123</span></p>
+      <p><strong>Tiempo de Reserva:</strong> <span th:text="${tiempo}">0</span> horas</p>
+      <p><strong>Precio Total:</strong> <span th:text="${precio}">0.00</span> €</p>
+    </div>
+  </div>
+
+  <form id="paymentForm" th:action="@{/procesar-pago}" method="post">
+    <input type="hidden" name="userId" th:value="${userId}" />
+    <input type="hidden" name="reservaId" th:value="${reservaId}" />
+    <input type="hidden" name="matricula" th:value="${matricula}" />
+    <input type="hidden" name="tiempo" th:value="${tiempo}" />
+    <input type="hidden" name="precio" th:value="${precio}" />
+    <input type="hidden" name="zone" th:value="${zone}" />
+
+    <div class="mb-3">
+      <label for="metodoPago" class="form-label">Método de pago:</label>
+      <select name="metodoPago" id="metodoPago" class="form-select">
+        <option value="tarjeta">Tarjeta</option>
+        <option value="paypal">PayPal</option>
+      </select>
+    </div>
+
+    <button type="submit" class="btn btn-success w-100">Pagar</button>
+  </form>
+</div>
+
+<script>
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(function(position) {
+      var zona = "Zona 1";
+      document.querySelector('input[name="zone"]').value = zona;
+    });
+  }
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

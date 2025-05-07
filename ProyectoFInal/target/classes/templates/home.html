@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>ParkingApp - Home</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <style>
+        /* Hero */
+        .hero {
+            background: url('https://source.unsplash.com/1600x600/?parking,city') center/cover no-repeat;
+            color: white;
+            padding: 100px 0;
+            position: relative;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: rgba(0,0,0,0.5);
+        }
+        .hero .container { position: relative; z-index: 1; }
+
+        /* Features */
+        .feature-box {
+            background: white;
+            border-radius: .5rem;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+            transition: transform .3s;
+        }
+        .feature-box:hover { transform: translateY(-5px); }
+        .feature-icon {
+            font-size: 3rem;
+            color: #0d6efd;
+            margin-bottom: 1rem;
+        }
+
+        /* Avatar */
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        /* Testimonials transparentes */
+        #testimonialCarousel,
+        #testimonialCarousel .carousel-inner,
+        #testimonialCarousel .carousel-item {
+            background-color: transparent !important;
+        }
+        #testimonialCarousel .carousel-item {
+            padding: 2rem 0;
+        }
+        #testimonialCarousel .carousel-control-prev-icon,
+        #testimonialCarousel .carousel-control-next-icon {
+            filter: invert(1);
+            background-color: transparent;
+        }
+
+        /* Footer (solo aquí va el azul) */
+        footer {
+            background: #ff0000;
+            color: #fff;
+            text-align: center;
+            padding: 1.5rem 0;
+            width: 100%;
+            box-shadow: 0 -2px 5px rgba(0,0,0,0.1);
+        }
+        footer p, footer small {
+            margin: 0;
+        }
+        footer p {
+            margin-bottom: .5rem;
+        }
+        footer a {
+            color: #f8f9fa;
+            text-decoration: none;
+            margin: 0 .5rem;
+            transition: color .3s;
+        }
+        footer a:hover {
+            color: #d1ecf1;
+        }
+        footer small {
+            display: block;
+            margin-top: .5rem;
+            font-weight: 300;
+            font-size: .9rem;
+        }
+    </style>
+</head>
+<body class="bg-light">
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary py-3">
+    <div class="container">
+        <a class="navbar-brand fw-bold" th:href="@{/home}">
+            <i class="bi bi-badge-cc-fill me-2"></i>ParkingApp
+        </a>
+        <div class="ms-auto dropdown">
+            <button class="btn btn-link text-white dropdown-toggle p-0" id="userDropdown" data-bs-toggle="dropdown">
+                <img src="https://img.freepik.com/vector-premium/vector-persona-que-toma-notas_878233-709.jpg?semt=ais_hybrid&w=740"
+                     alt="User Avatar" class="user-avatar">
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                <li>
+                    <a class="dropdown-item" th:href="@{/editar-usuario}">
+                        <i class="bi bi-pencil-square me-2"></i>Editar Usuario
+                    </a>
+                </li>
+                <li>
+                    <a class="dropdown-item" th:href="@{/logout}">
+                        <i class="bi bi-box-arrow-right me-2"></i>Cerrar Sesión
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- Hero Section -->
+<section class="hero text-center text-white mb-5">
+    <div class="container">
+        <h1 class="display-4 fw-bold">La forma más fácil de gestionar tu parking</h1>
+        <p class="lead mb-4">Reserva, paga y controla tu tiempo de estacionamiento desde cualquier lugar.</p>
+        <a class="btn btn-lg btn-light me-2" th:href="@{/nueva-reserva}">Hacer Reserva</a>
+        <a class="btn btn-lg btn-outline-light" th:href="@{/reserva}">Mis Reservas</a>
+    </div>
+</section>
+
+<!-- Features -->
+<div class="container mb-5">
+    <div class="row g-4">
+        <div class="col-md-4">
+            <div class="feature-box h-100">
+                <i class="feature-icon bi bi-car-front-fill"></i>
+                <h4>Añadir Vehículo</h4>
+                <p>Guarda los datos de tu coche para agilizar futuras reservas.</p>
+                <a class="btn btn-sm btn-primary" th:href="@{/vehiculo}">Gestionar Vehículos</a>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="feature-box h-100">
+                <i class="feature-icon bi bi-calendar2-check-fill"></i>
+                <h4>Reservas Flexibles</h4>
+                <p>Elige la zona y el tiempo que necesites sin complicaciones.</p>
+                <a class="btn btn-sm btn-primary" th:href="@{/nueva-reserva}">Nueva Reserva</a>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="feature-box h-100">
+                <i class="feature-icon bi bi-credit-card-fill"></i>
+                <h4>Pago Seguro</h4>
+                <p>Realiza pagos rápidos con tarjeta o PayPal con total seguridad.</p>
+                <a class="btn btn-sm btn-primary" th:href="@{/reserva}">Ver Reservas</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Testimonials -->
+<div class="container mb-5">
+    <h2 class="text-center mb-4">Lo que dicen nuestros usuarios</h2>
+    <div id="testimonialCarousel" class="carousel slide bg-transparent" data-bs-ride="carousel">
+        <div class="carousel-inner bg-transparent">
+            <div class="carousel-item active text-center">
+                <blockquote class="blockquote">
+                    <p class="mb-3">“ParkingApp me ahorra tiempo y preocupaciones cada vez que aparco en la ciudad.”</p>
+                    <footer class="blockquote-footer">María López</footer>
+                </blockquote>
+            </div>
+            <div class="carousel-item text-center">
+                <blockquote class="blockquote">
+                    <p class="mb-3">“La interfaz es muy intuitiva y el pago siempre es rápido.”</p>
+                    <footer class="blockquote-footer">José Martínez</footer>
+                </blockquote>
+            </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#testimonialCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon"></span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#testimonialCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon"></span>
+        </button>
+    </div>
+</div>
+
+<!-- Contact Section -->
+<div class="container text-center mb-5">
+    <h2>¿Necesitas Ayuda?</h2>
+    <p>Contáctanos en cualquier momento para soporte y preguntas.</p>
+    <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#contactModal">
+        <i class="bi bi-envelope-fill me-2"></i>Contactar Soporte
+    </button>
+</div>
+
+<!-- Contact Modal -->
+<div class="modal fade" id="contactModal" tabindex="-1" aria-labelledby="contactModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="contactModalLabel">Formulario de Contacto</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+            <div class="modal-body">
+                <form th:action="@{/enviar-solicitud}" method="post">
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Nombre</label>
+                        <input type="text" id="name" name="name" class="form-control" placeholder="Tu nombre" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="emailContact" class="form-label">Correo Electrónico</label>
+                        <input type="email" id="emailContact" name="email" class="form-control" placeholder="tu@correo.com" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="subject" class="form-label">Asunto</label>
+                        <input type="text" id="subject" name="subject" class="form-control" placeholder="Asunto" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="message" class="form-label">Mensaje</label>
+                        <textarea id="message" name="message" class="form-control" rows="4" placeholder="Escribe tu mensaje..." required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Enviar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Footer -->
+<footer class="text-center" id="footer">
+    <p class="mb-1">&copy; 2025 ParkingApp. Todos los derechos reservados.</p>
+    <small>
+        <a th:href="@{/privacy}">Política de Privacidad</a>
+        &middot;
+        <a th:href="@{/terms}">Términos de Servicio</a>
+    </small>
+</footer>
+
+<!-- Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    // Notificaciones de éxito en la URL
+    document.addEventListener("DOMContentLoaded", () => {
+        const params = new URLSearchParams(window.location.search);
+        if (params.get("pagoExitoso") === "true") {
+            const alertBox = document.createElement("div");
+            alertBox.className = "alert alert-success alert-dismissible fade show position-fixed top-0 end-0 m-3";
+            alertBox.innerHTML = `
+                <strong>¡Éxito!</strong> Tu pago se ha procesado correctamente.
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            `;
+            document.body.append(alertBox);
+            window.history.replaceState({}, document.title, window.location.pathname);
+        }
+    });
+</script>
+
+</body>
+</html>

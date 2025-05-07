@@ -1,0 +1,144 @@
+/* ----------------------------------------
+   Reset general y transición suave para todos
+------------------------------------------- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    transition: all 0.3s ease-in-out;
+}
+
+/* ----------------------------------------
+   Body: fondo azul muy suave y tipografía moderna
+------------------------------------------- */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f2f9ff;  /* Azul muy claro */
+    color: #333;
+}
+
+/* ----------------------------------------
+   Navbar: fondo azul vibrante y sombra sutil
+------------------------------------------- */
+.navbar {
+    background-color: #007bff;  /* Azul principal */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-brand {
+    font-weight: bold;
+    font-size: 1.8rem;
+    color: #fff !important;
+}
+
+.navbar .btn-outline-light {
+    border-color: #ffffff;
+    color: #ffffff;
+}
+
+.navbar .btn-outline-light:hover {
+    background-color: #ffffff;
+    color: #007bff;
+}
+
+/* ----------------------------------------
+   Tarjetas (Cards): bordes redondeados y sombra para profundidad
+------------------------------------------- */
+.card {
+    border-radius: 12px;
+    border: none;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* ----------------------------------------
+   Formularios: Etiquetas y controles
+------------------------------------------- */
+.form-label {
+    font-weight: 600;
+    color: #0056b3; /* Azul más oscuro para contraste */
+}
+
+.form-control {
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    padding: 0.5rem 0.75rem;
+}
+
+/* ----------------------------------------
+   Botones: personalización para el botón principal y secundarios
+------------------------------------------- */
+.btn-success {
+    background-color: #0056b3; /* Azul oscuro */
+    border-color: #0056b3;
+    font-weight: bold;
+}
+
+.btn-success:hover {
+    background-color: #004080;
+    border-color: #003366;
+}
+
+.btn-secondary {
+    background-color: #6c757d;
+    border-color: #6c757d;
+}
+
+.btn-secondary:hover {
+    background-color: #5a6268;
+}
+
+/* ----------------------------------------
+   Títulos y textos: armonía en los azules
+------------------------------------------- */
+h1, h2, h3, h4, h5 {
+    color: #0056b3;
+}
+
+/* ----------------------------------------
+   Tablas: estilo limpio con encabezados en azul claro
+------------------------------------------- */
+.table {
+    background-color: #fff;
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+.table th, .table td {
+    vertical-align: middle;
+    border-top: 1px solid #dee2e6;
+}
+
+.table thead th {
+    background-color: #e9f4ff; /* Encabezado azul muy suave */
+    border-bottom: 2px solid #dee2e6;
+}
+
+.table tbody tr:hover {
+    background-color: #f1faff;
+}
+
+/* ----------------------------------------
+   Enlaces y utilidades
+------------------------------------------- */
+a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Algunas utilidades personalizadas (refuerzan las clases de Bootstrap) */
+.mt-4 {
+    margin-top: 1.5rem !important;
+}
+
+.mx-auto {
+    margin-left: auto !important;
+    margin-right: auto !important;
+}
+
+.text-center {
+    text-align: center !important;
+}

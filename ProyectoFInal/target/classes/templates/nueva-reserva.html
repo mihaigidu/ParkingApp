@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Hacer Reserva - ParkingApp</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body class="bg-light">
+
+<!-- Header -->
+<nav class="navbar navbar-dark bg-primary">
+  <div class="container">
+    <a class="navbar-brand" href="/">ParkingApp</a>
+    <a class="btn btn-outline-light" href="/reserva">Ver Mis Reservas</a>
+  </div>
+</nav>
+
+<div class="container mt-4">
+  <h1 class="text-center text-primary">Hacer una Nueva Reserva</h1>
+
+  <div class="card shadow-lg p-4 mx-auto" style="max-width: 500px;">
+    <form id="reservaForm" th:action="@{/nueva-reserva}" method="post">
+
+      <div class="mb-3">
+        <label for="vehicleSelect" class="form-label">Selecciona tu vehículo:</label>
+        <select id="vehicleSelect" name="vehicleId" class="form-select">
+          <option value="">Selecciona un vehículo</option>
+          <th:block th:each="veh : ${vehicles}">
+
+            <option th:value="${veh.id}"
+                    th:text="${veh.marca} + ' ' + ${veh.modelo} + ' (' + ${veh.matricula} + ')'"
+                    th:attr="data-matricula=${veh.matricula}">
+            </option>
+          </th:block>
+        </select>
+      </div>
+
+
+
+      <div class="mb-3">
+        <label class="form-label">Matrícula del Vehículo:</label>
+        <input type="text" id="matricula" name="matricula" class="form-control" required placeholder="Ej: 1234ABC">
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Tiempo (minutos):</label>
+        <input type="number" class="form-control" id="tiempo" name="tiempo" required placeholder="Ej: 60" oninput="calcularPrecio()">
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Precio Total (€):</label>
+        <input type="text" id="precioTotal" class="form-control" name="precio" readonly>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Zona:</label>
+        <input type="text" class="form-control" name="zone" required placeholder="Ej: Centro">
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Método de Pago:</label>
+        <select class="form-select" name="metodoPago" required>
+          <option value="tarjeta">Tarjeta de Crédito</option>
+          <option value="paypal">PayPal</option>
+        </select>
+      </div>
+
+      <input type="hidden" name="latitud" id="latitud">
+      <input type="hidden" name="longitud" id="longitud">
+
+      <button type="submit" class="btn btn-success w-100">Pagar y Reservar</button>
+    </form>
+  </div>
+
+  <div class="text-center mt-3">
+    <a href="/reserva" class="btn btn-secondary">Ver Mis Reservas</a>
+  </div>
+</div>
+
+<script>
+  function calcularPrecio() {
+    const tiempo = document.getElementById("tiempo").value || 0;
+    const precioPorMinuto = 0.05;
+    document.getElementById("precioTotal").value = (tiempo * precioPorMinuto).toFixed(2);
+  }
+</script>
+
+
+<script>
+  document.getElementById('vehicleSelect').addEventListener('change', function() {
+    var selectedOption = this.options[this.selectedIndex];
+    var matricula = selectedOption.getAttribute('data-matricula');
+    document.getElementById('matricula').value = matricula ? matricula : "";
+  });
+</script>
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

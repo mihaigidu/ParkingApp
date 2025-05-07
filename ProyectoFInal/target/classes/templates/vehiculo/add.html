@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Añadir Vehículo - ParkingApp</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container mt-5">
+    <h1>Añadir Vehículo</h1>
+
+    <form th:action="@{/vehiculo/add}" method="post">
+        <div class="mb-3">
+            <label for="matricula" class="form-label">Matrícula</label>
+            <input type="text" class="form-control" id="matricula" name="matricula" placeholder="Introduce la matrícula" required>
+        </div>
+        <div class="mb-3">
+            <label for="marca" class="form-label">Marca</label>
+            <input type="text" class="form-control" id="marca" name="marca" placeholder="Introduce la marca">
+        </div>
+        <div class="mb-3">
+            <label for="modelo" class="form-label">Modelo</label>
+            <input type="text" class="form-control" id="modelo" name="modelo" placeholder="Introduce el modelo">
+        </div>
+        <button type="submit" class="btn btn-primary">Agregar Vehículo</button>
+    </form>
+
+    <a th:href="@{/vehiculo/list}" class="btn btn-secondary mt-3">Ver mis Vehículos</a>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const matriculaInput = document.getElementById('matricula');
+        matriculaInput.addEventListener('blur', function() {
+            const matricula = this.value.trim();
+            if (matricula !== "") {
+                fetch(`/vehiculo/buscar?matricula=${encodeURIComponent(matricula)}`)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Error en la respuesta del endpoint.');
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        console.log("Respuesta de la API:", data);
+                        let record = null;
+                        if (Array.isArray(data)) {
+                            record = data[0];
+                        } else if (data["0"]) {
+                            record = data["0"];
+                        }
+
+                        if (record) {
+                            document.getElementById('marca').value = record.MARCA || "";
+                            document.getElementById('modelo').value = record.MODELO || "";
+                        } else {
+                            console.error("No se encontró el registro de la matrícula en la respuesta.");
+                        }
+                    })
+                    .catch(error => {
+                        console.error("Error consultando la API:", error);
+                    });
+            }
+        });
+    });
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

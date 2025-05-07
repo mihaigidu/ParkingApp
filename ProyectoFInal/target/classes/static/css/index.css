@@ -1,0 +1,91 @@
+/* Estilos Generales */
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f0f8ff;
+    color: #333;
+}
+
+/* Contenedor Principal */
+.container {
+    text-align: center;
+    margin-top: 50px;
+    max-width: 800px;
+    padding: 20px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 5px 10px rgba(0, 0, 255, 0.2);
+}
+
+/* Títulos */
+h1 {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #007bff;
+}
+
+.highlight {
+    color: #0056b3;
+}
+
+/* Botones */
+.btn {
+    padding: 12px 20px;
+    font-size: 1.1rem;
+    border-radius: 30px;
+    transition: all 0.3s ease;
+    margin: 10px;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #007bff, #00d4ff);
+    border: none;
+}
+
+.btn-primary:hover {
+    background: linear-gradient(135deg, #00d4ff, #007bff);
+    transform: scale(1.05);
+}
+
+.btn-secondary {
+    background-color: #6c757d;
+    border: none;
+}
+
+.btn-secondary:hover {
+    background-color: #495057;
+    transform: scale(1.05);
+}
+
+/* Imagen */
+.image-container {
+    margin-top: 30px;
+}
+
+.image-container img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+}
+
+/* Responsividad */
+@media (max-width: 768px) {
+    h1 {
+        font-size: 2rem;
+    }
+
+    .btn {
+        padding: 10px 15px;
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    h1 {
+        font-size: 1.5rem;
+    }
+}
+
+.highlight {
+    color: #0056b3;
+    font-weight: bold;
+}
