@@ -3,37 +3,81 @@
 <head>
     <meta charset="UTF-8">
     <title>Registro</title>
-    <link rel="stylesheet" th:href="@{/css/register.css}">
+    <!-- Bootstrap CSS -->
+    <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+            rel="stylesheet">
+    <!-- Tus estilos -->
+    <link
+            rel="stylesheet"
+            href="/css/register.css"
+            th:href="@{/css/register.css}">
 </head>
-<body>
+<body class="bg-light">
 
-<div class="register-container">
-    <h2>Crear Cuenta</h2>
+<div class="register-container container py-5">
+    <h2 class="text-center mb-4">Crear Cuenta</h2>
 
-    <form th:action="@{/register}" method="post" th:object="${user}">
-        <div class="input-group">
-            <label>Usuario</label>
-            <input type="text" th:field="*{username}" required>
-            <div th:if="${#fields.hasErrors('username')}" th:errors="*{username}" class="error-message"></div>
+    <form
+            class="mx-auto"
+            style="max-width: 400px;"
+            th:action="@{/register}"
+            method="post"
+            th:object="${user}">
+        <div class="mb-3">
+            <label class="form-label">Usuario</label>
+            <input
+                    type="text"
+                    th:field="*{username}"
+                    class="form-control"
+                    required>
+            <div
+                    th:if="${#fields.hasErrors('username')}"
+                    th:errors="*{username}"
+                    class="text-danger small mt-1">
+            </div>
         </div>
 
-        <div class="input-group">
-            <label>Email</label>
-            <input type="email" th:field="*{email}" required>
-            <div th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="error-message"></div>
+        <div class="mb-3">
+            <label class="form-label">Email</label>
+            <input
+                    type="email"
+                    th:field="*{email}"
+                    class="form-control"
+                    required>
+            <div
+                    th:if="${#fields.hasErrors('email')}"
+                    th:errors="*{email}"
+                    class="text-danger small mt-1">
+            </div>
         </div>
 
-        <div class="input-group">
-            <label>Contraseña</label>
-            <input type="password" th:field="*{password}" required>
-            <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="error-message"></div>
+        <div class="mb-3">
+            <label class="form-label">Contraseña</label>
+            <input
+                    type="password"
+                    th:field="*{password}"
+                    class="form-control"
+                    required>
+            <div
+                    th:if="${#fields.hasErrors('password')}"
+                    th:errors="*{password}"
+                    class="text-danger small mt-1">
+            </div>
         </div>
 
-        <button type="submit" class="btn-primary">Registrarse</button>
+        <button type="submit" class="btn btn-primary w-100">Registrarse</button>
     </form>
 
-    <p>¿Ya tienes cuenta? <a th:href="@{/login}">Inicia sesión</a></p>
+    <p class="text-center mt-3">
+        ¿Ya tienes cuenta?
+        <a href="/login" th:href="@{/login}">Inicia sesión</a>
+    </p>
 </div>
 
+<!-- Bootstrap Bundle JS -->
+<script
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js">
+</script>
 </body>
 </html>

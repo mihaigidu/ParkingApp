@@ -3,9 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <title>ParkingApp - Home</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
-    <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+            rel="stylesheet">
+    <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
+            rel="stylesheet">
+    <link
+            rel="stylesheet"
+            href="/css/styles.css"
+            th:href="@{/css/styles.css}">
     <style>
         /* Hero */
         .hero {
@@ -98,22 +105,26 @@
 <!-- Navbar -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary py-3">
     <div class="container">
-        <a class="navbar-brand fw-bold" th:href="@{/home}">
+        <a class="navbar-brand fw-bold"
+           href="/home" th:href="@{/home}">
             <i class="bi bi-badge-cc-fill me-2"></i>ParkingApp
         </a>
         <div class="ms-auto dropdown">
-            <button class="btn btn-link text-white dropdown-toggle p-0" id="userDropdown" data-bs-toggle="dropdown">
+            <button class="btn btn-link text-white dropdown-toggle p-0"
+                    id="userDropdown" data-bs-toggle="dropdown">
                 <img src="https://img.freepik.com/vector-premium/vector-persona-que-toma-notas_878233-709.jpg?semt=ais_hybrid&w=740"
                      alt="User Avatar" class="user-avatar">
             </button>
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
                 <li>
-                    <a class="dropdown-item" th:href="@{/editar-usuario}">
+                    <a class="dropdown-item"
+                       href="/editar-usuario" th:href="@{/editar-usuario}">
                         <i class="bi bi-pencil-square me-2"></i>Editar Usuario
                     </a>
                 </li>
                 <li>
-                    <a class="dropdown-item" th:href="@{/logout}">
+                    <a class="dropdown-item"
+                       href="/logout" th:href="@{/logout}">
                         <i class="bi bi-box-arrow-right me-2"></i>Cerrar Sesión
                     </a>
                 </li>
@@ -127,8 +138,10 @@
     <div class="container">
         <h1 class="display-4 fw-bold">La forma más fácil de gestionar tu parking</h1>
         <p class="lead mb-4">Reserva, paga y controla tu tiempo de estacionamiento desde cualquier lugar.</p>
-        <a class="btn btn-lg btn-light me-2" th:href="@{/nueva-reserva}">Hacer Reserva</a>
-        <a class="btn btn-lg btn-outline-light" th:href="@{/reserva}">Mis Reservas</a>
+        <a class="btn btn-lg btn-light me-2"
+           href="/nueva-reserva" th:href="@{/nueva-reserva}">Hacer Reserva</a>
+        <a class="btn btn-lg btn-outline-light"
+           href="/reserva" th:href="@{/reserva}">Mis Reservas</a>
     </div>
 </section>
 
@@ -140,7 +153,8 @@
                 <i class="feature-icon bi bi-car-front-fill"></i>
                 <h4>Añadir Vehículo</h4>
                 <p>Guarda los datos de tu coche para agilizar futuras reservas.</p>
-                <a class="btn btn-sm btn-primary" th:href="@{/vehiculo}">Gestionar Vehículos</a>
+                <a class="btn btn-sm btn-primary"
+                   href="/vehiculo" th:href="@{/vehiculo}">Gestionar Vehículos</a>
             </div>
         </div>
         <div class="col-md-4">
@@ -148,7 +162,8 @@
                 <i class="feature-icon bi bi-calendar2-check-fill"></i>
                 <h4>Reservas Flexibles</h4>
                 <p>Elige la zona y el tiempo que necesites sin complicaciones.</p>
-                <a class="btn btn-sm btn-primary" th:href="@{/nueva-reserva}">Nueva Reserva</a>
+                <a class="btn btn-sm btn-primary"
+                   href="/nueva-reserva" th:href="@{/nueva-reserva}">Nueva Reserva</a>
             </div>
         </div>
         <div class="col-md-4">
@@ -156,7 +171,8 @@
                 <i class="feature-icon bi bi-credit-card-fill"></i>
                 <h4>Pago Seguro</h4>
                 <p>Realiza pagos rápidos con tarjeta o PayPal con total seguridad.</p>
-                <a class="btn btn-sm btn-primary" th:href="@{/reserva}">Ver Reservas</a>
+                <a class="btn btn-sm btn-primary"
+                   href="/reserva" th:href="@{/reserva}">Ver Reservas</a>
             </div>
         </div>
     </div>
@@ -207,7 +223,10 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
             </div>
             <div class="modal-body">
-                <form th:action="@{/enviar-solicitud}" method="post">
+                <form
+                        action="/enviar-solicitud"
+                        th:action="@{/enviar-solicitud}"
+                        method="post">
                     <div class="mb-3">
                         <label for="name" class="form-label">Nombre</label>
                         <input type="text" id="name" name="name" class="form-control" placeholder="Tu nombre" required>
@@ -235,14 +254,16 @@
 <footer class="text-center" id="footer">
     <p class="mb-1">&copy; 2025 ParkingApp. Todos los derechos reservados.</p>
     <small>
-        <a th:href="@{/privacy}">Política de Privacidad</a>
+        <a href="/privacy" th:href="@{/privacy}">Política de Privacidad</a>
         &middot;
-        <a th:href="@{/terms}">Términos de Servicio</a>
+        <a href="/terms"   th:href="@{/terms}">Términos de Servicio</a>
     </small>
 </footer>
 
 <!-- Scripts -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js">
+</script>
 <script>
     // Notificaciones de éxito en la URL
     document.addEventListener("DOMContentLoaded", () => {
