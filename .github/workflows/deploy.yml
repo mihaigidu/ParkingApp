@@ -28,7 +28,6 @@ jobs:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_KEY }}
-          # Ajustamos también la ruta al JAR generado
           source: "ProyectoFInal/target/ParkingApp-0.0.1-SNAPSHOT.jar"
           target: /home/ubuntu/app.jar
 
@@ -38,7 +37,6 @@ jobs:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_KEY }}
-          # Ruta a tus CSS dentro de ProyectoFInal
           source: "ProyectoFInal/src/main/resources/static/css/**/*"
           target: /home/ubuntu/website/css/
 
