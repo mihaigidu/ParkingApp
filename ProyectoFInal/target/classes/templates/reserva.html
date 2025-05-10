@@ -90,7 +90,7 @@
       </thead>
       <tbody>
       <tr th:each="reserva : ${reservas}">
-
+        <td th:text="${reserva.matricula}">—</td>
         <td th:text="${reserva.precio}">—</td>
         <td th:text="${reserva.zone}">—</td>
         <td th:text="${#temporals.format(reserva.fechaReserva, 'dd/MM/yyyy HH:mm')}">—</td>
