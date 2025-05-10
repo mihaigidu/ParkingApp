@@ -1,3 +1,5 @@
+# .github/workflows/deploy.yml
+
 name: CI/CD
 
 on:
@@ -7,68 +9,60 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+
     steps:
+      # 1) Obtener el código
       - name: Checkout code
         uses: actions/checkout@v3
 
+      # 2) Instalar Java 21 para compilar
       - name: Setup Java 21
         uses: actions/setup-java@v3
         with:
           distribution: 'temurin'
           java-version: '21'
 
-      # 🛠️ Aquí indicamos el directorio donde está el pom.xml
+      # 3) Compilar el proyecto (pom.xml en ProyectoFInal/)
       - name: Build JAR
         working-directory: ProyectoFInal
         run: mvn clean package -DskipTests
 
-      - name: Copy JAR to EC2
-        uses: appleboy/scp-action@master
+      # 4) Cargar clave SSH en ssh-agent
+      - name: Load SSH key
+        uses: webfactory/ssh-agent@v0.5.3
         with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USER }}
-          key: ${{ secrets.SSH_KEY }}
-          source: "ProyectoFInal/target/ParkingApp-0.0.1-SNAPSHOT.jar"
-          target: /home/ubuntu/
+          ssh-private-key: ${{ secrets.SSH_KEY }}
 
-      - name: Rename JAR on EC2
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USER }}
-          key: ${{ secrets.SSH_KEY }}
-          script: mv /home/ubuntu/ParkingApp-0.0.1-SNAPSHOT.jar /home/ubuntu/app.jar
+      # 5) Subir el JAR directamente como /home/ubuntu/app.jar
+      - name: Upload JAR via scp
+        run: |
+          scp -o StrictHostKeyChecking=no \
+            ProyectoFInal/target/ParkingApp-0.0.1-SNAPSHOT.jar \
+            ubuntu@${{ secrets.SSH_HOST }}:/home/ubuntu/app.jar
 
+      # 6) Subir los CSS estáticos
+      - name: Upload CSS via scp
+        run: |
+          scp -o StrictHostKeyChecking=no -r \
+            ProyectoFInal/src/main/resources/static/css \
+            ubuntu@${{ secrets.SSH_HOST }}:/home/ubuntu/website/css
+
+      # 7) Reiniciar el servicio Spring Boot en la EC2
       - name: Restart Spring Boot service
         uses: appleboy/ssh-action@master
         with:
-          host: ${{ secrets.SSH_HOST }}
+          host:     ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USER }}
-          key: ${{ secrets.SSH_KEY }}
-          script: sudo systemctl restart parkingapp
+          key:      ${{ secrets.SSH_KEY }}
+          script: |
+            sudo systemctl restart parkingapp
 
-
-      - name: Copy CSS to EC2
-        uses: appleboy/scp-action@master
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USER }}
-          key: ${{ secrets.SSH_KEY }}
-          source: "ProyectoFInal/src/main/resources/static/css/**/*"
-          target: /home/ubuntu/website/css/
-
-      - name: Restart Spring Boot service
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USER }}
-          key: ${{ secrets.SSH_KEY }}
-          script: sudo systemctl restart parkingapp
-
+      # 8) Recargar Nginx para servir los cambios
       - name: Reload Nginx
         uses: appleboy/ssh-action@master
         with:
-          host: ${{ secrets.SSH_HOST }}
+          host:     ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USER }}
-          key: ${{ secrets.SSH_KEY }}
-          script: sudo systemctl reload nginx
+          key:      ${{ secrets.SSH_KEY }}
+          script: |
+            sudo nginx -t && sudo systemctl reload nginx
