@@ -17,33 +17,44 @@ jobs:
         with:
           java-version: '17'
 
-      - name: Build project
+      - name: Build project (skip tests)
         run: mvn clean package -DskipTests
 
-      - name: Collect site files
+      - name: Collect static site files
         run: |
           mkdir site-files
           cp src/main/resources/templates/*.html site-files/
           cp -r src/main/resources/static/css site-files/css
 
-      - name: Upload artifact
+      - name: Upload artifacts
         uses: actions/upload-artifact@v3
         with:
           name: site-files
           path: site-files
+      - name: Upload JAR
+        uses: actions/upload-artifact@v3
+        with:
+          name: app-jar
+          path: target/ParkingApp-0.0.1-SNAPSHOT.jar
 
   deploy:
     name: Deploy to EC2
     needs: build
     runs-on: ubuntu-latest
     steps:
-      - name: Download artifact
+      - name: Download site files
         uses: actions/download-artifact@v3
         with:
           name: site-files
           path: site-files
 
-      - name: Copy files to EC2
+      - name: Download app JAR
+        uses: actions/download-artifact@v3
+        with:
+          name: app-jar
+          path: app
+
+      - name: Copy static files to EC2
         uses: appleboy/scp-action@master
         with:
           host: ${{ secrets.SSH_HOST }}
@@ -52,6 +63,25 @@ jobs:
           port: 22
           source: "site-files/**/*"
           target: /home/ubuntu/website/
+
+      - name: Copy JAR to EC2
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_KEY }}
+          port: 22
+          source: "app/ParkingApp-0.0.1-SNAPSHOT.jar"
+          target: /home/ubuntu/app.jar
+
+      - name: Restart Spring Boot service
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_KEY }}
+          script: |
+            sudo systemctl restart parkingapp
 
       - name: Reload Nginx
         uses: appleboy/ssh-action@master
