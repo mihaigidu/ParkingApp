@@ -6,63 +6,48 @@ on:
 
 jobs:
   build:
-    name: Build with Maven
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v3
 
-      - name: Set up Java 17
+      - name: Setup Java
         uses: actions/setup-java@v3
         with:
           java-version: '17'
 
-      - name: Build project (skip tests)
+      - name: Build JAR
         run: mvn clean package -DskipTests
 
-      - name: Collect static site files
-        run: |
-          mkdir site-files
-          cp src/main/resources/templates/*.html site-files/
-          cp -r src/main/resources/static/css site-files/css
-
-      - name: Upload artifacts
-        uses: actions/upload-artifact@v3
-        with:
-          name: site-files
-          path: site-files
       - name: Upload JAR
         uses: actions/upload-artifact@v3
         with:
           name: app-jar
           path: target/ParkingApp-0.0.1-SNAPSHOT.jar
 
+      - name: Upload static assets
+        uses: actions/upload-artifact@v3
+        with:
+          name: assets
+          path: |
+            src/main/resources/static/css/**
+            src/main/resources/static/js/**
+            src/main/resources/static/img/**
+
   deploy:
-    name: Deploy to EC2
     needs: build
     runs-on: ubuntu-latest
     steps:
-      - name: Download site files
-        uses: actions/download-artifact@v3
-        with:
-          name: site-files
-          path: site-files
-
-      - name: Download app JAR
+      - name: Download JAR
         uses: actions/download-artifact@v3
         with:
           name: app-jar
           path: app
 
-      - name: Copy static files to EC2
-        uses: appleboy/scp-action@master
+      - name: Download assets
+        uses: actions/download-artifact@v3
         with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USER }}
-          key: ${{ secrets.SSH_KEY }}
-          port: 22
-          source: "site-files/**/*"
-          target: /home/ubuntu/website/
+          name: assets
+          path: assets
 
       - name: Copy JAR to EC2
         uses: appleboy/scp-action@master
@@ -70,11 +55,10 @@ jobs:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_KEY }}
-          port: 22
           source: "app/ParkingApp-0.0.1-SNAPSHOT.jar"
           target: /home/ubuntu/app.jar
 
-      - name: Restart Spring Boot service
+      - name: Restart Spring Boot
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.SSH_HOST }}
@@ -83,10 +67,38 @@ jobs:
           script: |
             sudo systemctl restart parkingapp
 
+      - name: Copy CSS
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_KEY }}
+          source: "assets/src/main/resources/static/css/**/*"
+          target: /home/ubuntu/website/css/
+
+      - name: Copy JS
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_KEY }}
+          source: "assets/src/main/resources/static/js/**/*"
+          target: /home/ubuntu/website/js/
+
+      - name: Copy IMG
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_KEY }}
+          source: "assets/src/main/resources/static/img/**/*"
+          target: /home/ubuntu/website/img/
+
       - name: Reload Nginx
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_KEY }}
-          script: sudo systemctl reload nginx
+          script: |
+            sudo systemctl reload nginx
