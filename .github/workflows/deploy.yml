@@ -17,7 +17,9 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
+      # 🛠️ Aquí indicamos el directorio donde está el pom.xml
       - name: Build JAR
+        working-directory: ProyectoFInal
         run: mvn clean package -DskipTests
 
       - name: Copy JAR to EC2
@@ -26,7 +28,8 @@ jobs:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_KEY }}
-          source: "target/ParkingApp-0.0.1-SNAPSHOT.jar"
+          # Ajustamos también la ruta al JAR generado
+          source: "ProyectoFInal/target/ParkingApp-0.0.1-SNAPSHOT.jar"
           target: /home/ubuntu/app.jar
 
       - name: Copy CSS to EC2
@@ -35,7 +38,8 @@ jobs:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_KEY }}
-          source: "src/main/resources/static/css/**/*"
+          # Ruta a tus CSS dentro de ProyectoFInal
+          source: "ProyectoFInal/src/main/resources/static/css/**/*"
           target: /home/ubuntu/website/css/
 
       - name: Restart Spring Boot service
