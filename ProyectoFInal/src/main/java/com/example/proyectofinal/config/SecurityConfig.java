@@ -74,7 +74,16 @@ public class SecurityConfig {
                 )
                 .formLogin(form -> form
                         .loginPage("/login")
-                        .defaultSuccessUrl("/home", true)
+                        .successHandler((request, response, authentication) -> {
+                            String username = authentication.getName();
+                            User user = userRepository.findByUsername(username).orElse(null);
+
+                            if (user != null && "ADMIN".equals(user.getRole())) {
+                                response.sendRedirect("/admin/verificar");
+                            } else {
+                                response.sendRedirect("/home");
+                            }
+                        })
                         .permitAll()
                 )
                 .oauth2Login(oauth2 -> oauth2

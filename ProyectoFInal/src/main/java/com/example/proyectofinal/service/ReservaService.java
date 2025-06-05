@@ -75,6 +75,11 @@ public class ReservaService {
         return reserva.orElse(null); // Devolver null si no se encuentra la reserva
     }
 
+    public List<Reserva> buscarPorMatricula(String matricula) {
+        return reservaRepository.findByMatriculaIgnoreCase(matricula);
+    }
+
+
     public List<Reserva> obtenerTodasReservas() {
         return reservaRepository.findAll();
     }

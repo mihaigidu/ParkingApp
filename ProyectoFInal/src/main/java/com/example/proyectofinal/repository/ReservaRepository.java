@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface ReservaRepository extends JpaRepository<Reserva, Long> {
     List<Reserva> findByUsuarioUsername(String username);
+    List<Reserva> findByMatriculaIgnoreCase(String matricula);
+
 }
