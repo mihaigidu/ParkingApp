@@ -25,7 +25,7 @@ jobs:
         working-directory: ProyectoFInal
         run: mvn clean package -DskipTests
 
-      # 4) Cargar clave SSH en ssh-agent
+      # 4) Cargar clave SSH en ssh-agent para los pasos de ssh/scp
       - name: Load SSH key
         uses: webfactory/ssh-agent@v0.5.3
         with:
@@ -38,14 +38,27 @@ jobs:
             ProyectoFInal/target/ParkingApp-0.0.1-SNAPSHOT.jar \
             ubuntu@${{ secrets.SSH_HOST }}:/home/ubuntu/app.jar
 
-      # 6) Subir los CSS estáticos
+      # 6) Asegurar que el directorio /home/ubuntu/website/css existe y pertenece a ubuntu
+      - name: Ensure remote CSS folder exists & permisos
+        uses: appleboy/ssh-action@master
+        with:
+          host:     ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key:      ${{ secrets.SSH_KEY }}
+          script: |
+            sudo mkdir -p /home/ubuntu/website/css
+            sudo chown -R ubuntu:ubuntu /home/ubuntu/website
+
+      # 7) Subir los CSS estáticos (solo el contenido de static/css/)
       - name: Upload CSS via scp
         run: |
+          # El sufijo “static/css/” copia únicamente los archivos DENTRO de css,
+          # evitando que se genere /website/css/css/…
           scp -o StrictHostKeyChecking=no -r \
-            ProyectoFInal/src/main/resources/static/css \
-            ubuntu@${{ secrets.SSH_HOST }}:/home/ubuntu/website/css
+            ProyectoFInal/src/main/resources/static/css/ \
+            ubuntu@${{ secrets.SSH_HOST }}:/home/ubuntu/website/css/
 
-      # 7) Reiniciar el servicio Spring Boot en la EC2
+      # 8) Reiniciar el servicio Spring Boot en la EC2
       - name: Restart Spring Boot service
         uses: appleboy/ssh-action@master
         with:
@@ -53,9 +66,11 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           key:      ${{ secrets.SSH_KEY }}
           script: |
-            sudo systemctl restart parkingapp
+            sudo chown ubuntu:ubuntu /home/ubuntu/app.jar
+            sudo chmod 750 /home/ubuntu/app.jar
+            sudo systemctl restart parkingapp.service
 
-      # 8) Recargar Nginx para servir los cambios
+      # 9) Recargar Nginx para servir los cambios
       - name: Reload Nginx
         uses: appleboy/ssh-action@master
         with:
@@ -65,10 +80,10 @@ jobs:
           script: |
             sudo nginx -t && sudo systemctl reload nginx
 
+      # 10) Cache de dependencias Maven (opcional, acelera builds futuros)
       - name: Cache Maven
         uses: actions/cache@v3
         with:
           path: ~/.m2/repository
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2-
-

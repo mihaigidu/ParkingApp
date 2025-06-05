@@ -1,0 +1,51 @@
+Manifest-Version: 1.0
+Main-Class: com.example.proyectofinal.ProyectoFInalApplication
+Class-Path: spring-boot-starter-web-3.4.3.jar netty-handler-proxy-4.1.11
+ 8.Final.jar jul-to-slf4j-2.0.16.jar spring-web-6.2.3.jar thymeleaf-3.1.
+ 3.RELEASE.jar jackson-datatype-jsr310-2.18.2.jar spring-security-web-6.
+ 4.4.jar netty-transport-native-unix-common-4.1.118.Final.jar netty-tran
+ sport-classes-epoll-4.1.118.Final.jar txw2-4.0.5.jar jakarta.validation
+ -api-3.0.2.jar jakarta.transaction-api-2.0.1.jar netty-codec-4.1.118.Fi
+ nal.jar jaxb-core-4.0.5.jar jakarta.activation-1.2.2.jar oauth2-oidc-sd
+ k-9.43.6.jar async-http-client-2.12.4.jar spring-boot-starter-logging-3
+ .4.3.jar slf4j-api-2.0.16.jar lang-tag-1.7.jar jackson-module-parameter
+ -names-2.18.2.jar spring-orm-6.2.3.jar spring-boot-starter-validation-3
+ .4.3.jar spring-jcl-6.2.3.jar spring-boot-starter-oauth2-client-3.4.3.j
+ ar netty-codec-socks-4.1.118.Final.jar netty-reactive-streams-2.0.4.jar
+  jackson-core-2.18.2.jar jakarta.annotation-api-2.1.1.jar postgresql-42
+ .7.5.jar jackson-datatype-jdk8-2.18.2.jar netty-transport-native-epoll-
+ 4.1.118.Final-linux-x86_64.jar hibernate-commons-annotations-7.0.3.Fina
+ l.jar accessors-smart-2.5.2.jar spring-boot-starter-mail-3.4.3.jar spri
+ ng-jdbc-6.2.3.jar reactive-streams-1.0.4.jar jandex-3.2.0.jar angus-act
+ ivation-2.0.2.jar spring-boot-starter-tomcat-3.4.3.jar checker-qual-3.4
+ 8.3.jar micrometer-commons-1.14.4.jar classmate-1.7.0.jar hibernate-cor
+ e-6.6.8.Final.jar spring-security-crypto-6.4.4.jar tomcat-embed-websock
+ et-10.1.36.jar netty-transport-native-kqueue-4.1.118.Final-osx-x86_64.j
+ ar logback-core-1.5.16.jar unbescape-1.1.6.RELEASE.jar jackson-databind
+ -2.18.2.jar thymeleaf-spring6-3.1.3.RELEASE.jar spring-context-support-
+ 6.2.3.jar snakeyaml-2.3.jar async-http-client-netty-utils-2.12.4.jar ne
+ tty-transport-4.1.118.Final.jar spring-security-oauth2-core-6.4.4.jar s
+ pring-boot-autoconfigure-3.4.3.jar tomcat-embed-el-10.1.36.jar hibernat
+ e-validator-8.0.2.Final.jar logback-classic-1.5.16.jar jackson-annotati
+ ons-2.18.2.jar spring-boot-starter-json-3.4.3.jar jakarta.persistence-a
+ pi-3.1.0.jar spring-boot-starter-security-3.4.3.jar jakarta.activation-
+ api-2.1.3.jar tomcat-embed-core-10.1.36.jar spring-expression-6.2.3.jar
+  istack-commons-runtime-4.1.2.jar jakarta.inject-api-2.0.1.jar spring-b
+ oot-starter-jdbc-3.4.3.jar jcip-annotations-1.0-1.jar spring-boot-3.4.3
+ .jar netty-common-4.1.118.Final.jar spring-data-commons-3.4.3.jar sprin
+ g-aspects-6.2.3.jar spring-boot-devtools-3.4.3.jar netty-handler-4.1.11
+ 8.Final.jar spring-beans-6.2.3.jar antlr4-runtime-4.13.0.jar spring-aop
+ -6.2.3.jar spring-security-oauth2-client-6.4.4.jar content-type-2.2.jar
+  attoparser-2.0.7.RELEASE.jar spring-core-6.2.3.jar spring-boot-starter
+ -thymeleaf-3.4.3.jar netty-resolver-4.1.118.Final.jar spring-webmvc-6.2
+ .3.jar jakarta.xml.bind-api-4.0.2.jar spring-security-oauth2-jose-6.4.4
+ .jar jakarta.mail-2.0.3.jar netty-transport-classes-kqueue-4.1.118.Fina
+ l.jar asm-9.7.1.jar log4j-api-2.24.3.jar nimbus-jose-jwt-9.37.3.jar jso
+ n-smart-2.5.2.jar spring-boot-starter-3.4.3.jar spring-boot-starter-dat
+ a-jpa-3.4.3.jar netty-codec-http-4.1.118.Final.jar HikariCP-5.1.0.jar s
+ pring-data-jpa-3.4.3.jar jaxb-runtime-4.0.5.jar log4j-to-slf4j-2.24.3.j
+ ar netty-buffer-4.1.118.Final.jar spring-security-core-6.4.4.jar spring
+ -tx-6.2.3.jar aspectjweaver-1.9.22.1.jar spring-context-6.2.3.jar micro
+ meter-observation-1.14.4.jar jboss-logging-3.6.1.Final.jar byte-buddy-1
+ .15.11.jar spring-security-config-6.4.4.jar
+
