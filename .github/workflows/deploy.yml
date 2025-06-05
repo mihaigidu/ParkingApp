@@ -88,4 +88,10 @@ jobs:
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2-
 
+      - name: Test SSH reachability
+        run: |
+          echo "Comprobando accesibilidad SSH a ${{ secrets.SSH_HOST }}"
+          nc -zv ${{ secrets.SSH_HOST }} 22 || echo "No se pudo conectar por netcat."
+   
+
 
