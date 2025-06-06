@@ -123,10 +123,11 @@
                     </a>
                 </li>
                 <li>
-                    <a class="dropdown-item"
-                       href="/logout" th:href="@{/logout}">
-                        <i class="bi bi-box-arrow-right me-2"></i>Cerrar Sesión
-                    </a>
+                    <form th:action="@{/logout}" method="post" class="d-inline">
+                        <button type="submit" class="btn btn-outline-light">Cerrar Sesión</button>
+                    </form>
+
+
                 </li>
             </ul>
         </div>
