@@ -59,9 +59,13 @@
         #testimonialCarousel .carousel-item {
             background-color: transparent !important;
         }
-        #testimonialCarousel .carousel-item {
-            padding: 2rem 0;
+        #testimonialCarousel .carousel-item blockquote {
+            background-color: rgba(13, 110, 253, 0.1); /* azul clarito */
+            border-radius: 10px;
+            padding: 20px;
+            display: inline-block;
         }
+
         #testimonialCarousel .carousel-control-prev-icon,
         #testimonialCarousel .carousel-control-next-icon {
             filter: invert(1);
@@ -70,13 +74,14 @@
 
         /* Footer (solo aquí va el azul) */
         footer {
-            background: #ff0000;
+            background: #0d6efd; /* azul primary */
             color: #fff;
             text-align: center;
             padding: 1.5rem 0;
             width: 100%;
             box-shadow: 0 -2px 5px rgba(0,0,0,0.1);
         }
+
         footer p, footer small {
             margin: 0;
         }
@@ -139,10 +144,10 @@
     <div class="container">
         <h1 class="display-4 fw-bold">La forma más fácil de gestionar tu parking</h1>
         <p class="lead mb-4">Reserva, paga y controla tu tiempo de estacionamiento desde cualquier lugar.</p>
-        <a class="btn btn-lg btn-light me-2"
+       <!-- <a class="btn btn-lg btn-light me-2"
            href="/nueva-reserva" th:href="@{/nueva-reserva}">Hacer Reserva</a>
         <a class="btn btn-lg btn-outline-light"
-           href="/reserva" th:href="@{/reserva}">Mis Reservas</a>
+           href="/reserva" th:href="@{/reserva}">Mis Reservas</a> -->
     </div>
 </section>
 
@@ -160,7 +165,7 @@
         </div>
         <div class="col-md-4">
             <div class="feature-box h-100">
-                <i class="feature-icon bi bi-calendar2-check-fill"></i>
+                <i class="feature-icon bi bi-calendar-check-fill"></i>
                 <h4>Reservas Flexibles</h4>
                 <p>Elige la zona y el tiempo que necesites sin complicaciones.</p>
                 <a class="btn btn-sm btn-primary"
@@ -169,11 +174,11 @@
         </div>
         <div class="col-md-4">
             <div class="feature-box h-100">
-                <i class="feature-icon bi bi-credit-card-fill"></i>
-                <h4>Pago Seguro</h4>
-                <p>Realiza pagos rápidos con tarjeta o PayPal con total seguridad.</p>
+                <i class="feature-icon bi bi-list-check"></i>
+                <h4>Mis reservas</h4>
+                <p>Consulta tus reservas con un simple vistazo.</p>
                 <a class="btn btn-sm btn-primary"
-                   href="/reserva" th:href="@{/reserva}">Ver Reservas</a>
+                   href="/reserva" th:href="@{/reserva}">Mis Reservas</a>
             </div>
         </div>
     </div>

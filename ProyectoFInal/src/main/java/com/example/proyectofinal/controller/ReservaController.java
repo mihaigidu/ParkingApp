@@ -13,10 +13,7 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.time.LocalDateTime;
@@ -106,4 +103,29 @@ public class ReservaController {
         reservaService.guardarReserva(reserva);
         return "redirect:/procesar-pago/" + reserva.getId();
     }
+
+    @GetMapping("/reserva/extender/{id}")
+    public String mostrarFormularioExtension(@PathVariable Long id, Model model, Principal principal) {
+        Reserva reserva = reservaService.getReservaById(id);
+
+        if (reserva == null || !reserva.getUsuario().getUsername().equals(principal.getName())) {
+            return "redirect:/error";
+        }
+
+        model.addAttribute("reserva", reserva);
+        return "extender-reserva";
+    }
+
+    @PostMapping("/reserva/extender")
+    public String procesarExtensionReserva(@RequestParam Long reservaId, @RequestParam int nuevoTiempo) {
+        Reserva reserva = reservaService.getReservaById(reservaId);
+        if (reserva == null) return "redirect:/error";
+
+        reserva.setTiempo(nuevoTiempo);
+        reserva.setPrecio(nuevoTiempo * 0.05); // Recalcular precio
+        reservaService.guardarReserva(reserva);
+
+        return "redirect:/procesar-pago/" + reserva.getId(); // Redirige a pagar de nuevo
+    }
+
 }

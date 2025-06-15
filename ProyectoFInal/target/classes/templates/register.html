@@ -44,13 +44,16 @@
                     type="email"
                     th:field="*{email}"
                     class="form-control"
-                    required>
+                    required
+                    pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
+                    title="Introduce un correo electrónico válido.">
             <div
                     th:if="${#fields.hasErrors('email')}"
                     th:errors="*{email}"
                     class="text-danger small mt-1">
             </div>
         </div>
+
 
         <div class="mb-3">
             <label class="form-label">Contraseña</label>

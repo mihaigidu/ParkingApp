@@ -20,12 +20,12 @@ public class ProyectoFInalApplication {
     @Bean
     CommandLineRunner init(UserRepository userRepository, BCryptPasswordEncoder encoder) {
         return args -> {
-            if (userRepository.findByUsername("admin").isEmpty()) {
+            if (userRepository.findByUsername("supervisor").isEmpty()) {
                 User admin = new User();
-                admin.setUsername("admin");
-                admin.setEmail("admin@admin.com");
-                admin.setPassword(encoder.encode("admin"));
-                admin.setRole("ADMIN");
+                admin.setUsername("supervisor");
+                admin.setEmail("supervisor@admin.com");
+                admin.setPassword(encoder.encode("supervisor"));
+                admin.setRole("SUPERVISOR");
                 userRepository.save(admin);
             }
         };

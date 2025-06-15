@@ -14,6 +14,13 @@
 <body>
 <div class="login-container">
     <h2 class="text-center">Iniciar Sesión</h2>
+
+    <!-- ALERTA de error -->
+    <div th:if="${param.error}" class="alert alert-danger alert-dismissible fade show" role="alert">
+        Usuario o contraseña incorrectos. Por favor, inténtalo de nuevo.
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
+    </div>
+
     <form action="/login" th:action="@{/login}" method="post">
         <div class="mb-3">
             <label for="username" class="form-label">Usuario:</label>
@@ -45,5 +52,6 @@
         </div>
     </form>
 </div>
+
 </body>
 </html>

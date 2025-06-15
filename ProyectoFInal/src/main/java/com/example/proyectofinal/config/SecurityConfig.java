@@ -70,6 +70,7 @@ public class SecurityConfig {
                         // rutas que requieren autenticación
                         .requestMatchers("/reserva", "/nueva-reserva", "/procesar-pago/**").authenticated()
                         .requestMatchers("/admin/**").hasRole("ADMIN")
+                        .requestMatchers("/supervisor/**").hasRole("SUPERVISOR")
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form
@@ -78,8 +79,14 @@ public class SecurityConfig {
                             String username = authentication.getName();
                             User user = userRepository.findByUsername(username).orElse(null);
 
-                            if (user != null && "ADMIN".equals(user.getRole())) {
-                                response.sendRedirect("/admin/verificar");
+                            if (user != null) {
+                                if ("ADMIN".equals(user.getRole())) {
+                                    response.sendRedirect("/admin/verificar");
+                                } else if ("SUPERVISOR".equals(user.getRole())) {
+                                    response.sendRedirect("/supervisor/verificar");
+                                } else {
+                                    response.sendRedirect("/home");
+                                }
                             } else {
                                 response.sendRedirect("/home");
                             }

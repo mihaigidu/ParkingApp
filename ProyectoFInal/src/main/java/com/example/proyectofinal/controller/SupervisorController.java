@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
-@RequestMapping("/admin")
-public class AdminController {
+@RequestMapping("/supervisor")
+public class SupervisorController {
 
     @Autowired
     private ReservaService reservaService;
@@ -24,7 +24,7 @@ public class AdminController {
 
     @GetMapping("/verificar")
     public String mostrarVerificador() {
-        return "admin-verificar";
+        return "supervisor-verificar";
     }
 
     @PostMapping("/verificar")
@@ -42,6 +42,6 @@ public class AdminController {
 
         model.addAttribute("matricula", matricula);
         model.addAttribute("pagado", pagado);
-        return "admin-verificar";
+        return "supervisor-verificar";
     }
 }

@@ -85,6 +85,7 @@
         <th>Zona</th>
         <th>Fecha Inicio</th>
         <th>Fecha Fin</th>
+        <th>Acciones</th> <!-- Nueva columna -->
       </tr>
       </thead>
       <tbody>
@@ -94,9 +95,14 @@
         <td th:text="${reserva.zone}">—</td>
         <td th:text="${#temporals.format(reserva.fechaReserva, 'dd/MM/yyyy HH:mm')}">—</td>
         <td th:text="${#temporals.format(reserva.fechaReserva.plusMinutes(reserva.tiempo), 'dd/MM/yyyy HH:mm')}">—</td>
+        <td>
+          <a th:href="@{/reserva/extender/{id}(id=${reserva.id})}" class="btn btn-sm btn-outline-primary">
+            Modificar
+          </a>
+        </td>
       </tr>
       <tr th:if="${#lists.isEmpty(reservas)}">
-        <td colspan="5" class="no-data">No hay reservas para mostrar.</td>
+        <td colspan="6" class="no-data">No hay reservas para mostrar.</td>
       </tr>
       </tbody>
     </table>

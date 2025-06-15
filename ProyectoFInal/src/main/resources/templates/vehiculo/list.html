@@ -4,32 +4,66 @@
     <meta charset="UTF-8">
     <title>Mis Vehículos - ParkingApp</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <style>
+        .hero {
+            background: url('https://source.unsplash.com/1600x400/?cars,street,parking') center/cover no-repeat;
+            height: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-shadow: 1px 1px 5px rgba(0,0,0,0.7);
+        }
+    </style>
 </head>
-<body>
-<div class="container mt-5">
+<body class="bg-light">
+
+<!-- Header -->
+<nav class="navbar navbar-dark bg-primary">
+    <div class="container">
+        <a class="navbar-brand" href="/">ParkingApp</a>
+        <form th:action="@{/home}" method="post" class="d-inline">
+            <button type="submit" class="btn btn-outline-light">Cerrar Sesión</button>
+        </form>
+    </div>
+</nav>
+
+<!-- Hero Image -->
+<div class="hero mb-5">
     <h1>Mis Vehículos</h1>
-    <table class="table table-bordered">
-        <thead>
-        <tr>
-            <th>Matrícula</th>
-            <th>Marca</th>
-            <th>Modelo</th>
-            <th>Acciones</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="vehiculo : ${vehiculos}">
-            <td th:text="${vehiculo.matricula}">Matrícula</td>
-            <td th:text="${vehiculo.marca}">Marca</td>
-            <td th:text="${vehiculo.modelo}">Modelo</td>
-            <td>
-                <a th:href="@{'/vehiculo/delete/' + ${vehiculo.id}}" class="btn btn-danger btn-sm">Eliminar</a>
-            </td>
-        </tr>
-        </tbody>
-    </table>
-    <a th:href="@{/vehiculo/add}" class="btn btn-primary">Añadir Vehículo</a>
 </div>
+
+<!-- Vehículos Table -->
+<div class="container">
+    <div class="table-responsive">
+        <table class="table table-striped table-bordered shadow">
+            <thead class="table-primary">
+            <tr>
+                <th>Matrícula</th>
+                <th>Marca</th>
+                <th>Modelo</th>
+                <th>Acciones</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="vehiculo : ${vehiculos}">
+                <td th:text="${vehiculo.matricula}">Matrícula</td>
+                <td th:text="${vehiculo.marca}">Marca</td>
+                <td th:text="${vehiculo.modelo}">Modelo</td>
+                <td>
+                    <a th:href="@{'/vehiculo/delete/' + ${vehiculo.id}}" class="btn btn-danger btn-sm">Eliminar</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="text-center mt-4">
+        <a th:href="@{/vehiculo/add}" class="btn btn-success btn-lg">Añadir Vehículo</a>
+    </div>
+</div>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
