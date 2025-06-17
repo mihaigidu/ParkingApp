@@ -22,7 +22,9 @@
 <!-- Header -->
 <nav class="navbar navbar-dark bg-primary">
     <div class="container">
-        <a class="navbar-brand" href="/">ParkingApp</a>
+        <a class="navbar-brand"
+           href="/home"
+           th:href="@{/home}">ParkingApp</a>
         <form th:action="@{/home}" method="post" class="d-inline">
             <button type="submit" class="btn btn-outline-light">Cerrar Sesión</button>
         </form>
