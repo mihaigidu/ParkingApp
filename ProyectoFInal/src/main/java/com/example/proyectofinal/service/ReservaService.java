@@ -10,7 +10,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
+import java.time.ZoneId;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -19,10 +20,10 @@ import java.util.stream.Collectors;
 public class ReservaService {
 
     @Autowired
-    private  ReservaRepository reservaRepository;
+    private ReservaRepository reservaRepository;
 
     @Autowired
-    private  UserRepository userRepository;
+    private UserRepository userRepository;
 
     public ReservaService(ReservaRepository reservaRepository, UserRepository userRepository) {
         this.reservaRepository = reservaRepository;
@@ -30,21 +31,17 @@ public class ReservaService {
     }
 
     public List<Reserva> obtenerReservasDelUsuario() {
-        String username = SecurityContextHolder.getContext()
-                .getAuthentication().getName();
-        LocalDateTime ahora = LocalDateTime.now();
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        OffsetDateTime ahora = OffsetDateTime.now(ZoneId.of("Europe/Madrid"));
 
         return reservaRepository.findByUsuarioUsername(username)
                 .stream()
                 .filter(r ->
                         r.getFechaReserva() != null &&
-                                r.getFechaReserva()
-                                        .plusMinutes(r.getTiempo())
-                                        .isAfter(ahora)
+                                r.getFechaReserva().plusMinutes(r.getTiempo()).isAfter(ahora)
                 )
                 .collect(Collectors.toList());
     }
-
 
     public void guardarReserva(Reserva reserva) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -61,29 +58,29 @@ public class ReservaService {
             optionalUser = userRepository.findByEmail(email);
         }
 
+        User user = optionalUser.orElseThrow(() -> new RuntimeException("Usuario no encontrado con username/email"));
+
+        reserva.setUsuario(user);
+
+        if (reserva.getFechaReserva() == null) {
+            OffsetDateTime ahora = OffsetDateTime.now(ZoneId.of("Europe/Madrid"));
+            reserva.setFechaReserva(ahora);
+        }
+
         if (reserva.getFechaFin() == null && reserva.getFechaReserva() != null) {
             reserva.setFechaFin(reserva.getFechaReserva().plusMinutes(reserva.getTiempo()));
         }
 
-
-        User user = optionalUser.orElseThrow(() -> new RuntimeException("Usuario no encontrado con username/email"));
-
-        reserva.setUsuario(user);
-        reserva.setFechaReserva(LocalDateTime.now());
         reservaRepository.save(reserva);
     }
 
-
-
     public Reserva getReservaById(Long reservaId) {
-        Optional<Reserva> reserva = reservaRepository.findById(reservaId);
-        return reserva.orElse(null); // Devolver null si no se encuentra la reserva
+        return reservaRepository.findById(reservaId).orElse(null);
     }
 
     public List<Reserva> buscarPorMatricula(String matricula) {
         return reservaRepository.findByMatriculaIgnoreCase(matricula);
     }
-
 
     public List<Reserva> obtenerTodasReservas() {
         return reservaRepository.findAll();
@@ -92,6 +89,4 @@ public class ReservaService {
     public void borrarReservas(List<Reserva> reservas) {
         reservaRepository.deleteAll(reservas);
     }
-
-
 }

@@ -17,6 +17,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.List;
 
 @Controller
@@ -97,7 +100,7 @@ public class ReservaController {
         }
 
         reserva.setUsuario(user);
-        reserva.setFechaReserva(LocalDateTime.now());
+        reserva.setFechaReserva(OffsetDateTime.now(ZoneId.of("Europe/Madrid")));
         reserva.setPrecio(reserva.getTiempo() * 0.05);
 
         reservaService.guardarReserva(reserva);
@@ -131,7 +134,6 @@ public class ReservaController {
         } else if (reserva.getFechaReserva() != null) {
             reserva.setFechaFin(reserva.getFechaReserva().plusMinutes(tiempoTotal));
         } else {
-            reserva.setFechaReserva(LocalDateTime.now());
             reserva.setFechaFin(reserva.getFechaReserva().plusMinutes(tiempoTotal));
         }
 

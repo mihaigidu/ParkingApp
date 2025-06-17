@@ -3,6 +3,8 @@ package com.example.proyectofinal.model;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
+import java.time.ZonedDateTime;
 
 @Entity
 public class Reserva {
@@ -19,23 +21,22 @@ public class Reserva {
     private Double latitud;
     private Double longitud;
 
-    private LocalDateTime fechaReserva;
+    @Column(columnDefinition = "TIMESTAMP WITH TIME ZONE")
+    private OffsetDateTime fechaReserva;
+
+    @Column(columnDefinition = "TIMESTAMP WITH TIME ZONE")
+    private OffsetDateTime fechaFin;
+
+
 
     private String metodoPago;
-    private LocalDateTime fechaFin;
 
 
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User usuario;
 
-    public LocalDateTime getFechaReserva() {
-        return fechaReserva;
-    }
 
-    public void setFechaReserva(LocalDateTime fechaReserva) {
-        this.fechaReserva = fechaReserva;
-    }
 
     // Getters y Setters
     public Long getId() {
@@ -110,11 +111,19 @@ public class Reserva {
         this.latitud = latitud;
     }
 
-    public LocalDateTime getFechaFin() {
+    public OffsetDateTime getFechaFin() {
         return fechaFin;
     }
 
-    public void setFechaFin(LocalDateTime fechaFin) {
+    public void setFechaFin(OffsetDateTime fechaFin) {
         this.fechaFin = fechaFin;
+    }
+
+    public OffsetDateTime getFechaReserva() {
+        return fechaReserva;
+    }
+
+    public void setFechaReserva(OffsetDateTime fechaReserva) {
+        this.fechaReserva = fechaReserva;
     }
 }
