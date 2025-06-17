@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Sobre Nosotros - ParkingApp</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            background-color: #f8f9fa;
+        }
+
+        .main-content {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: start;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #0d6efd;
+        }
+
+        footer {
+            background: #0d6efd;
+            color: white;
+            text-align: center;
+            padding: 1rem 0;
+        }
+
+        footer a {
+            color: #f8f9fa;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            color: #d1ecf1;
+        }
+    </style>
+</head>
+<body>
+
+<div class="main-content">
+    <div class="container">
+        <h1 class="text-center">Sobre Nosotros</h1>
+        <p class="lead mt-4">
+            ParkingApp nace con el objetivo de facilitar la gestión del estacionamiento en entornos urbanos.
+            Sabemos que encontrar un sitio para aparcar, pagar de forma segura y controlar tu tiempo puede ser un reto.
+            Por eso hemos creado esta plataforma intuitiva que te permite:
+        </p>
+        <ul>
+            <li>Registrar y gestionar tus vehículos fácilmente.</li>
+            <li>Realizar reservas en zonas de estacionamiento con total comodidad.</li>
+            <li>Controlar tus pagos y recibir notificaciones.</li>
+        </ul>
+        <p>
+            Nuestro equipo está formado por desarrolladores y diseñadores comprometidos con mejorar la movilidad urbana a través de la tecnología.
+        </p>
+        <p>
+            Gracias por confiar en ParkingApp. Si tienes sugerencias o comentarios, ¡no dudes en contactar con nosotros!
+        </p>
+    </div>
+</div>
+
+<footer>
+    <p>&copy; 2025 ParkingApp. Todos los derechos reservados.</p>
+    <small>
+        <a href="/home" th:href="@{/home}">Volver al Inicio</a>
+    </small>
+</footer>
+
+</body>
+</html>
