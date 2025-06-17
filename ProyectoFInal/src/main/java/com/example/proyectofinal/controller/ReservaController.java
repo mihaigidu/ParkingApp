@@ -121,11 +121,26 @@ public class ReservaController {
         Reserva reserva = reservaService.getReservaById(reservaId);
         if (reserva == null) return "redirect:/error";
 
-        reserva.setTiempo(nuevoTiempo);
-        reserva.setPrecio(nuevoTiempo * 0.05); // Recalcular precio
-        reservaService.guardarReserva(reserva);
+        // Sumar el nuevo tiempo al existente
+        int tiempoTotal = reserva.getTiempo() + nuevoTiempo;
+        reserva.setTiempo(tiempoTotal);
 
-        return "redirect:/procesar-pago/" + reserva.getId(); // Redirige a pagar de nuevo
+        // Actualizar fechaFin sumando los nuevos minutos
+        if (reserva.getFechaFin() != null) {
+            reserva.setFechaFin(reserva.getFechaFin().plusMinutes(nuevoTiempo));
+        } else if (reserva.getFechaReserva() != null) {
+            reserva.setFechaFin(reserva.getFechaReserva().plusMinutes(tiempoTotal));
+        } else {
+            reserva.setFechaReserva(LocalDateTime.now());
+            reserva.setFechaFin(reserva.getFechaReserva().plusMinutes(tiempoTotal));
+        }
+
+        // Recalcular precio
+        reserva.setPrecio(tiempoTotal * 0.05);
+
+        reservaService.guardarReserva(reserva);
+        return "redirect:/procesar-pago/" + reserva.getId();
     }
+
 
 }

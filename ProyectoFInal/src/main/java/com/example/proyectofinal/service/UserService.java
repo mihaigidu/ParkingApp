@@ -43,4 +43,20 @@ public class UserService {
     public User getUserById(Long id) {
         return userRepository.findById(id).orElseThrow(() -> new RuntimeException("Usuario no encontrado con ID: " + id));
     }
+
+
+    public User saveUpdated(User user) {
+        // Verifica si el nuevo username o email pertenecen a otro usuario
+        Optional<User> userByUsername = userRepository.findByUsername(user.getUsername());
+        if (userByUsername.isPresent() && !userByUsername.get().getId().equals(user.getId())) {
+            throw new RuntimeException("El nombre de usuario ya está en uso.");
+        }
+
+        Optional<User> userByEmail = userRepository.findByEmail(user.getEmail());
+        if (userByEmail.isPresent() && !userByEmail.get().getId().equals(user.getId())) {
+            throw new RuntimeException("El correo electrónico ya está en uso.");
+        }
+
+        return userRepository.save(user);
+    }
 }

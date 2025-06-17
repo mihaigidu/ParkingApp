@@ -19,6 +19,14 @@ public class VehiculoService {
     }
 
     public Vehiculo guardarVehiculo(Vehiculo vehiculo) {
+        boolean existe = vehiculoRepository
+                .findByMatriculaAndUser(vehiculo.getMatricula(), vehiculo.getUser())
+                .isPresent();
+
+        if (existe) {
+            throw new RuntimeException("Ya has registrado un vehículo con esta matrícula.");
+        }
+
         return vehiculoRepository.save(vehiculo);
     }
 

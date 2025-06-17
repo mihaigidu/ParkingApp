@@ -60,21 +60,29 @@ public class VehiculoController {
     }
 
     @PostMapping("/add")
-    public String addVehiculo(@ModelAttribute Vehiculo vehiculo, Principal principal) {
+    public String addVehiculo(@ModelAttribute Vehiculo vehiculo, Principal principal, Model model) {
         String principalName = principal.getName();
         User user = userService.findByUsername(principalName);
         if (user == null) {
             Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-            if (auth.getPrincipal() instanceof OAuth2User) {
-                OAuth2User oauthUser = (OAuth2User) auth.getPrincipal();
-                String email = oauthUser.getAttribute("email");
-                user = userService.findByEmail(email);
+            if (auth.getPrincipal() instanceof OAuth2User oauthUser) {
+                user = userService.findByEmail(oauthUser.getAttribute("email"));
             }
         }
+
         vehiculo.setUser(user);
-        vehiculoService.guardarVehiculo(vehiculo);
+
+        try {
+            vehiculoService.guardarVehiculo(vehiculo);
+        } catch (RuntimeException e) {
+            model.addAttribute("vehiculos", vehiculo);
+            model.addAttribute("errorMatricula", e.getMessage());
+            return "vehiculo/add";
+        }
+
         return "redirect:/home?vehicleAdded=true";
     }
+
 
     // Permite eliminar un vehículo.
     @GetMapping("/delete/{vehiculoId}")

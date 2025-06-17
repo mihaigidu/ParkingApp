@@ -24,11 +24,7 @@
             color: #0d6efd;
         }
 
-        .btn-primary {
-            width: 100%;
-        }
-
-        .btn-secondary {
+        .btn-primary, .btn-secondary {
             width: 100%;
         }
 
@@ -53,28 +49,34 @@
         </form>
     </div>
 </nav>
+
 <div class="form-container">
     <h1 class="text-center">Añadir Vehículo</h1>
 
-    <form th:action="@{/vehiculo/add}" method="post">
+    <form th:action="@{/vehiculo/add}" method="post" onsubmit="return validarMatricula()">
         <div class="mb-3">
             <label for="matricula" class="form-label">Matrícula</label>
-            <input type="text" class="form-control" id="matricula" name="matricula" placeholder="Introduce la matrícula" required>
+            <input type="text" class="form-control" id="matricula" name="matricula" required>
+            <div th:if="${errorMatricula}" class="text-danger" th:text="${errorMatricula}"></div>
         </div>
+
         <div class="mb-3">
             <label for="marca" class="form-label">Marca</label>
             <input type="text" class="form-control" id="marca" name="marca" placeholder="Introduce la marca">
         </div>
+
         <div class="mb-3">
             <label for="modelo" class="form-label">Modelo</label>
             <input type="text" class="form-control" id="modelo" name="modelo" placeholder="Introduce el modelo">
         </div>
+
         <button type="submit" class="btn btn-primary mb-2">Agregar Vehículo</button>
     </form>
 
     <a th:href="@{/vehiculo/list}" class="btn btn-secondary mt-2">Ver mis Vehículos</a>
 </div>
 
+<!-- Script de autocompletado desde la API -->
 <script>
     document.addEventListener("DOMContentLoaded", function() {
         const matriculaInput = document.getElementById('matricula');
@@ -110,6 +112,21 @@
             }
         });
     });
+
+    function validarMatricula() {
+        const input = document.getElementById('matricula');
+        const matricula = input.value.trim().toUpperCase();
+        const regex = /^[0-9]{4}[A-Z]{3}$/;
+
+        if (!regex.test(matricula)) {
+            alert("Por favor, introduce una matrícula válida (ej. 1234ABC).");
+            input.focus();
+            return false;
+        }
+
+        input.value = matricula; // Normaliza a mayúsculas
+        return true;
+    }
 </script>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

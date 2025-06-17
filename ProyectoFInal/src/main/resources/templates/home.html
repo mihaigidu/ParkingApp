@@ -3,16 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <title>ParkingApp - Home</title>
-    <link
-            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
-            rel="stylesheet">
-    <link
-            href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
-            rel="stylesheet">
-    <link
-            rel="stylesheet"
-            href="/css/styles.css"
-            th:href="@{/css/styles.css}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/styles.css" th:href="@{/css/styles.css}">
     <style>
         /* Hero */
         .hero {
@@ -27,7 +20,10 @@
             inset: 0;
             background: rgba(0,0,0,0.5);
         }
-        .hero .container { position: relative; z-index: 1; }
+        .hero .container {
+            position: relative;
+            z-index: 1;
+        }
 
         /* Features */
         .feature-box {
@@ -38,7 +34,9 @@
             box-shadow: 0 0 15px rgba(0,0,0,0.1);
             transition: transform .3s;
         }
-        .feature-box:hover { transform: translateY(-5px); }
+        .feature-box:hover {
+            transform: translateY(-5px);
+        }
         .feature-icon {
             font-size: 3rem;
             color: #0d6efd;
@@ -60,28 +58,30 @@
             background-color: transparent !important;
         }
         #testimonialCarousel .carousel-item blockquote {
-            background-color: rgba(13, 110, 253, 0.1); /* azul clarito */
+            background-color: rgba(13, 110, 253, 0.1);
             border-radius: 10px;
             padding: 20px;
             display: inline-block;
         }
-
         #testimonialCarousel .carousel-control-prev-icon,
         #testimonialCarousel .carousel-control-next-icon {
             filter: invert(1);
             background-color: transparent;
         }
+        /* Color blanco para los nombres */
+        #testimonialCarousel .carousel-item footer.blockquote-footer {
+            color: #fff !important;
+        }
 
-        /* Footer (solo aquí va el azul) */
+        /* Footer */
         footer {
-            background: #0d6efd; /* azul primary */
+            background: #0d6efd;
             color: #fff;
             text-align: center;
             padding: 1.5rem 0;
             width: 100%;
             box-shadow: 0 -2px 5px rgba(0,0,0,0.1);
         }
-
         footer p, footer small {
             margin: 0;
         }
@@ -110,29 +110,26 @@
 <!-- Navbar -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary py-3">
     <div class="container">
-        <a class="navbar-brand fw-bold"
-           href="/home" th:href="@{/home}">
+        <a class="navbar-brand fw-bold" href="/home" th:href="@{/home}">
             <i class="bi bi-badge-cc-fill me-2"></i>ParkingApp
         </a>
         <div class="ms-auto dropdown">
-            <button class="btn btn-link text-white dropdown-toggle p-0"
-                    id="userDropdown" data-bs-toggle="dropdown">
+            <button class="btn btn-link text-white dropdown-toggle p-0" id="userDropdown" data-bs-toggle="dropdown">
                 <img src="https://img.freepik.com/vector-premium/vector-persona-que-toma-notas_878233-709.jpg?semt=ais_hybrid&w=740"
                      alt="User Avatar" class="user-avatar">
             </button>
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
                 <li>
-                    <a class="dropdown-item"
-                       href="/editar-usuario" th:href="@{/editar-usuario}">
+                    <a class="dropdown-item" href="/editar-usuario" th:href="@{/editar-usuario}">
                         <i class="bi bi-pencil-square me-2"></i>Editar Usuario
                     </a>
                 </li>
                 <li>
                     <form th:action="@{/logout}" method="post" class="d-inline">
-                        <button type="submit" class="btn btn-outline-light">Cerrar Sesión</button>
+                        <button type="submit" class="btn btn-outline-light" style="color: black;">
+                            <i class="bi bi-box-arrow-right"></i> Cerrar Sesión
+                        </button>
                     </form>
-
-
                 </li>
             </ul>
         </div>
@@ -144,10 +141,6 @@
     <div class="container">
         <h1 class="display-4 fw-bold">La forma más fácil de gestionar tu parking</h1>
         <p class="lead mb-4">Reserva, paga y controla tu tiempo de estacionamiento desde cualquier lugar.</p>
-       <!-- <a class="btn btn-lg btn-light me-2"
-           href="/nueva-reserva" th:href="@{/nueva-reserva}">Hacer Reserva</a>
-        <a class="btn btn-lg btn-outline-light"
-           href="/reserva" th:href="@{/reserva}">Mis Reservas</a> -->
     </div>
 </section>
 
@@ -159,8 +152,7 @@
                 <i class="feature-icon bi bi-car-front-fill"></i>
                 <h4>Añadir Vehículo</h4>
                 <p>Guarda los datos de tu coche para agilizar futuras reservas.</p>
-                <a class="btn btn-sm btn-primary"
-                   href="/vehiculo" th:href="@{/vehiculo}">Gestionar Vehículos</a>
+                <a class="btn btn-sm btn-primary" href="/vehiculo" th:href="@{/vehiculo}">Gestionar Vehículos</a>
             </div>
         </div>
         <div class="col-md-4">
@@ -168,8 +160,7 @@
                 <i class="feature-icon bi bi-calendar-check-fill"></i>
                 <h4>Reservas Flexibles</h4>
                 <p>Elige la zona y el tiempo que necesites sin complicaciones.</p>
-                <a class="btn btn-sm btn-primary"
-                   href="/nueva-reserva" th:href="@{/nueva-reserva}">Nueva Reserva</a>
+                <a class="btn btn-sm btn-primary" href="/nueva-reserva" th:href="@{/nueva-reserva}">Nueva Reserva</a>
             </div>
         </div>
         <div class="col-md-4">
@@ -177,8 +168,7 @@
                 <i class="feature-icon bi bi-list-check"></i>
                 <h4>Mis reservas</h4>
                 <p>Consulta tus reservas con un simple vistazo.</p>
-                <a class="btn btn-sm btn-primary"
-                   href="/reserva" th:href="@{/reserva}">Mis Reservas</a>
+                <a class="btn btn-sm btn-primary" href="/reserva" th:href="@{/reserva}">Mis Reservas</a>
             </div>
         </div>
     </div>
@@ -229,10 +219,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
             </div>
             <div class="modal-body">
-                <form
-                        action="/enviar-solicitud"
-                        th:action="@{/enviar-solicitud}"
-                        method="post">
+                <form action="/enviar-solicitud" th:action="@{/enviar-solicitud}" method="post">
                     <div class="mb-3">
                         <label for="name" class="form-label">Nombre</label>
                         <input type="text" id="name" name="name" class="form-control" placeholder="Tu nombre" required>
@@ -262,16 +249,16 @@
     <small>
         <a href="/privacy" th:href="@{/privacy}">Política de Privacidad</a>
         &middot;
-        <a href="/terms"   th:href="@{/terms}">Términos de Servicio</a>
+        <a href="/terms" th:href="@{/terms}">Términos de Servicio</a>
+        &middot;
+        <a href="/sobre-nosotros" th:href="@{/sobre-nosotros}">Sobre Nosotros</a>
     </small>
+
 </footer>
 
 <!-- Scripts -->
-<script
-        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js">
-</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-    // Notificaciones de éxito en la URL
     document.addEventListener("DOMContentLoaded", () => {
         const params = new URLSearchParams(window.location.search);
         if (params.get("pagoExitoso") === "true") {

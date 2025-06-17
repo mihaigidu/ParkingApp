@@ -22,6 +22,8 @@ public class Reserva {
     private LocalDateTime fechaReserva;
 
     private String metodoPago;
+    private LocalDateTime fechaFin;
+
 
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -106,5 +108,13 @@ public class Reserva {
 
     public void setLatitud(Double latitud) {
         this.latitud = latitud;
+    }
+
+    public LocalDateTime getFechaFin() {
+        return fechaFin;
+    }
+
+    public void setFechaFin(LocalDateTime fechaFin) {
+        this.fechaFin = fechaFin;
     }
 }

@@ -61,6 +61,11 @@ public class ReservaService {
             optionalUser = userRepository.findByEmail(email);
         }
 
+        if (reserva.getFechaFin() == null && reserva.getFechaReserva() != null) {
+            reserva.setFechaFin(reserva.getFechaReserva().plusMinutes(reserva.getTiempo()));
+        }
+
+
         User user = optionalUser.orElseThrow(() -> new RuntimeException("Usuario no encontrado con username/email"));
 
         reserva.setUsuario(user);

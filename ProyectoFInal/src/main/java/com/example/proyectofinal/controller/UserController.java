@@ -23,7 +23,6 @@ public class UserController {
         return "homeInicio";
     }
 
-
     @GetMapping("/register")
     public String showRegistrationForm(Model model) {
         System.out.println("Accediendo a /register");
@@ -31,15 +30,14 @@ public class UserController {
         return "register";
     }
 
-
     @PostMapping("/register")
     public String processRegistration(@Valid @ModelAttribute("user") User user,
                                       BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             return "register";
         }
-        userService.save(user);
-        return "redirect:/login?registered";
+        userService.save(user); // ✅ guardar usuario nuevo
+        return "redirect:/login?registered"; // ✅ redirigir tras registro
     }
 
     @GetMapping("/login")
@@ -60,29 +58,29 @@ public class UserController {
 
         if (user != null) {
             model.addAttribute("user", user);
-            return "editar-usuario";  // La vista para editar el usuario
+            return "editar-usuario";  // Vista para editar usuario
         } else {
             return "redirect:/error";
         }
     }
 
-    // Actualizar la información del usuario
     @PostMapping("/editar-usuario")
     public String actualizarUsuario(@ModelAttribute("user") User user) {
-        // Obtener el usuario autenticado
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         User existingUser = userService.findByUsername(username);
 
         if (existingUser != null) {
             existingUser.setUsername(user.getUsername());
             existingUser.setEmail(user.getEmail());
-            userService.save(existingUser);  // Guardar los cambios en la base de datos
-            return "redirect:/home";  // Redirigir al home después de la actualización
+            userService.saveUpdated(existingUser);  // ✅ guardar cambios al usuario
+            return "redirect:/editar-usuario?actualizado=true"; // ✅ redirigir con confirmación
         } else {
             return "redirect:/error";
         }
     }
 
-
-
+    @GetMapping("/sobre-nosotros")
+    public String sobreNosotros() {
+        return "sobre-nosotros";
+    }
 }
